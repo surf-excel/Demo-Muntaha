@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}PraRoz{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="main">
+    <div class="navbar">
+      <div class="icon">
+        <h2 class="logo">PraRoz</h2>
+      </div>
+      <div class="menu">
+        <ul>
+          <li><a href="{{ url_for('dashboard') }}">DASHBOARD</a></li>
+          <li><a href="{{ url_for('reports') }}">REPORTS</a></li>
+          <li><a href="{{ url_for('contacts') }}">CONTACTS</a></li>
+          <li><a href="{{ url_for('logout') }}">LOGOUT</a></li>
+        </ul>
+      </div>
+      <div class="search">
+        <input class="srch" type="search" placeholder="Search...">
+        <button class="btn">Search</button>
+      </div>
+    </div>
+    <div class="content">
+      {% block content %}{% endblock %}
+    </div>
+  </div>
+  <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
+</body>
+</html>

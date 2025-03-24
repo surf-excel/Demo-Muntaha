@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Report Submitted</title>
+  <!-- If you still want any styling, link to a CSS file or add inline CSS here -->
+  <!-- <link rel="stylesheet" href="{{ url_for('static', filename='submitted.css') }}"> -->
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background: #f0f8ff; /* or your preferred color/image */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    .container {
+      background: #fff;
+      max-width: 600px;
+      width: 90%;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.15);
+      text-align: center;
+    }
+    h1 {
+      margin-bottom: 15px;
+      color: #333;
+    }
+    p {
+      margin-bottom: 20px;
+      line-height: 1.5;
+      color: #333;
+    }
+    .stations {
+      margin-bottom: 20px;
+      list-style: none;
+      padding: 0;
+      text-align: left;
+    }
+    .stations li {
+      margin-bottom: 8px;
+    }
+    .btn {
+      background: #ff7200;
+      color: #fff;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background: #e66a00;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Report Submitted</h1>
+    <p>Dear {{ reporter }},</p>
+    <p>
+      Thank you for submitting the missing person report for {{ missing_name }}.<br>
+      We have issued an alert within a 20km radius and notified the local police station.
+    </p>
+    <h2>Nearby Police Stations:</h2>
+    <ul class="stations">
+      {% if stations and stations|length > 0 %}
+        {% for station, dist in stations %}
+          <li>{{ station }} ({{ dist|round(2) }} km away)</li>
+        {% endfor %}
+      {% else %}
+        <li>No nearby police stations found.</li>
+      {% endif %}
+    </ul>
+    <button class="btn" onclick="window.location.href='{{ url_for('dashboard') }}'">
+      Return to Dashboard
+    </button>
+  </div>
+</body>
+</html>

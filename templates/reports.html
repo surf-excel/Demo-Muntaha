@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Missing Reports</title>
+  <style>
+      body {
+          background: #f0f8ff;
+          font-family: Arial, sans-serif;
+          padding: 2em;
+      }
+      .container {
+          max-width: 1000px;
+          margin: 0 auto;
+          background: #fff;
+          padding: 2em;
+          border-radius: 10px;
+          box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      }
+      h1 {
+          text-align: center;
+          color: #333;
+      }
+      table {
+          width: 100%;
+          border-collapse: collapse;
+          margin-top: 1em;
+      }
+      table, th, td {
+          border: 1px solid #ddd;
+      }
+      th, td {
+          padding: 1em;
+          text-align: left;
+          vertical-align: top;
+      }
+      th {
+          background: #007ACC;
+          color: #fff;
+      }
+      img {
+          max-width: 100px;
+          max-height: 100px;
+          display: block;
+      }
+      .chat-box {
+          border-top: 1px solid #ccc;
+          margin-top: 0.5em;
+          padding-top: 0.5em;
+      }
+      .chat-message {
+          font-size: 0.9em;
+          margin-bottom: 0.3em;
+      }
+      .chat-form textarea {
+          width: 100%;
+          height: 50px;
+          resize: vertical;
+      }
+      .chat-form input[type="submit"] {
+          margin-top: 0.3em;
+          padding: 0.3em 0.8em;
+          background: #007ACC;
+          color: #fff;
+          border: none;
+          border-radius: 3px;
+          cursor: pointer;
+      }
+      .action-buttons a {
+          display: inline-block;
+          text-decoration: none;
+          color: #fff;
+          background: #007ACC;
+          padding: 0.5em 1em;
+          border-radius: 5px;
+          margin-right: 8px;
+          margin-bottom: 4px;
+      }
+      .action-buttons { white-space: nowrap; }
+  </style>
+</head>
+<body>
+  <div class="container">
+      <h1>Missing Reports</h1>
+      {% if reports %}
+      <table>
+        <tr>
+          <th>Reporter</th>
+          <th>Address</th>
+          <th>Missing Name</th>
+          <th>Contact</th>
+          <th>Photo</th>
+          <th>Description</th>
+          <th>Actions</th>
+        </tr>
+        {% for report in reports %}
+        <tr>
+          <td>{{ report.reporter }}</td>
+          <td>{{ report.address }}</td>
+          <td>{{ report.missing_name }}</td>
+          <td>{{ report.contact }}</td>
+          <td>
+            {% if report.photo %}
+              <img src="{{ report.photo }}" alt="Report Image">
+            {% else %}
+              No photo
+            {% endif %}
+          </td>
+          <td>{{ report.description }}</td>
+          <td>
+            {% if session.admin %}
+              <a href="{{ url_for('edit_report', report_id=report.id) }}">Edit</a>
+              <a href="{{ url_for('delete_report', report_id=report.id) }}">Delete</a>
+            {% else %}
+              N/A
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
+      {% else %}
+      <p>No reports available.</p>
+      {% endif %}
+      <a href="{{ url_for('dashboard') }}">Back to Home</a>
+  </div>
+</body>
+</html>

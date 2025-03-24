@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Report Message Center</title>
+  <style>
+    body { background: #f0f8ff; font-family: Arial, sans-serif; padding: 2em; }
+    .container { max-width: 800px; margin: auto; background: #fff; padding: 2em; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    h1 { text-align: center; color: #333; }
+    .report-message { border: 1px solid #ddd; border-radius: 5px; padding: 1em; margin-bottom: 1em; background: #fafafa; }
+    .report-message h3 { margin-top: 0; color: #007ACC; }
+    .chat-message { font-size: 0.9em; margin-bottom: 0.5em; }
+    a { display: block; text-align: center; margin-top: 1em; text-decoration: none; color: #007ACC; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Messages for Your Reports</h1>
+    {% if my_reports and my_reports|length > 0 %}
+      {% for rep in my_reports %}
+        <div class="report-message">
+          <h3>
+            Report: {{ rep.missing_name }}
+            {% if rep.reporter %} (Submitted by: {{ rep.reporter }}) {% endif %}
+            | Report ID: {{ rep.index }}
+          </h3>
+          {% if rep.chat and rep.chat|length > 0 %}
+            {% for msg in rep.chat %}
+              <div class="chat-message">
+                <strong>{{ msg.sender }}:</strong> {{ msg.message }}
+              </div>
+            {% endfor %}
+          {% else %}
+            <p>No messages for this report yet.</p>
+          {% endif %}
+        </div>
+      {% endfor %}
+    {% else %}
+      <p>You have not submitted any reports or there are no messages yet.</p>
+    {% endif %}
+    <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+  </div>
+</body>
+</html>

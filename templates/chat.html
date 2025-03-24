@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="refresh" content="10">
+  <title>Global Chat</title>
+  <style>
+    body { background: #f0f8ff; font-family: Arial, sans-serif; padding: 2em; }
+    .container { max-width: 600px; margin: auto; background: #fff; padding: 1em; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    .message { margin-bottom: 1em; border-bottom: 1px solid #ddd; padding-bottom: 0.5em; }
+    .sender { font-weight: bold; }
+    form textarea { width: 100%; height: 60px; margin-top: 1em; padding: 0.5em; border: 1px solid #ccc; border-radius: 5px; }
+    form input[type="submit"] { margin-top: 0.5em; padding: 0.5em 1em; background: #007ACC; color: #fff; border: none; border-radius: 5px; cursor: pointer; }
+    .error { color: #a33; background: #ffe6e6; padding: 0.5em; border-radius: 5px; margin-bottom: 1em; }
+    a { text-decoration: none; color: #007ACC; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Global Chat</h1>
+    {% if error_msg %}
+      <div class="error">{{ error_msg }}</div>
+    {% endif %}
+    {% for msg in messages %}
+      <div class="message">
+        <span class="sender">{{ msg.sender }}:</span>
+        <span class="text">{{ msg.message }}</span>
+      </div>
+    {% endfor %}
+    <form method="POST">
+      <textarea name="message" placeholder="Enter your message..." required></textarea>
+      <input type="submit" value="Send">
+    </form>
+    <p><a href="{{ url_for('dashboard') }}">Back to Dashboard</a></p>
+  </div>
+</body>
+</html>

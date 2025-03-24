@@ -1,0 +1,46 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(to top, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.5) 50%), url("{{ url_for('static', filename='1.jpg') }}");
+  background-position: center;
+  background-size: cover;
+  color: #fff;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  background: rgba(0, 0, 0, 0.8);
+  padding: 30px;
+  border-radius: 10px;
+  width: 500px;
+  text-align: center;
+}
+
+h1 {
+  margin-bottom: 15px;
+  color: #ff7200;
+}
+
+p {
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.back-btn {
+  background: #ff7200;
+  color: #fff;
+  font-size: 16px;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.back-btn:hover {
+  background: #fff;
+  color: #ff7200;
+}

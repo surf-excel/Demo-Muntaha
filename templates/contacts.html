@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Contacts</title>
+  <style>
+    body { background: #f0f8ff; font-family: Arial, sans-serif; padding:2em; }
+    .container { max-width:600px; margin: auto; background: white; padding:2em; border-radius:10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    ul { list-style-type: none; padding:0; }
+    li { margin-bottom: 1em; }
+    a { text-decoration: none; color: #007ACC; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Contacts</h1>
+    <ul>
+      {% for user in users %}
+        <li><a href="{{ url_for('private_chat', recipient=user) }}">{{ user }}</a></li>
+      {% endfor %}
+    </ul>
+    <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+  </div>
+</body>
+</html>

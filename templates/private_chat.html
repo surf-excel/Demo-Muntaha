@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Chat with {{ recipient }}</title>
+  <style>
+    body { background: #f0f8ff; font-family: Arial, sans-serif; padding:2em; }
+    .container { max-width:600px; margin: auto; background: white; padding:2em; border-radius:10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    .message { margin-bottom: 1em; padding-bottom: 0.5em; border-bottom: 1px solid #ddd; }
+    .sender { font-weight: bold; }
+    textarea { width: 100%; height: 60px; padding: 0.5em; margin-top: 1em; border: 1px solid #ccc; border-radius: 5px; }
+    input[type="submit"] { margin-top: 0.5em; padding: 0.5em 1em; background: #007ACC; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    .error { color: #a33; background: #ffe6e6; padding: 0.5em; border-radius: 5px; margin-bottom: 1em; }
+    .msg-image { max-width: 200px; max-height: 200px; }
+    a { text-decoration: none; color: #007ACC; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Chat with {{ recipient }}</h1>
+    {% if error_msg %}
+      <div class="error">{{ error_msg }}</div>
+    {% endif %}
+    <div id="chat-box">
+      {% for msg in messages %}
+        <div class="message">
+          {% if msg.sender == session.username %}
+            <span class="sender">You:</span>
+          {% else %}
+            <span class="sender">{{ msg.sender }}:</span>
+          {% endif %}
+          {% if msg.message.startswith("image:") %}
+            {# Extract the image URL from the message #}
+            <br>
+            <img src="{{ msg.message[6:] }}" alt="Sent image" class="msg-image">
+          {% else %}
+            <span class="text">{{ msg.message }}</span>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+    <form method="POST" enctype="multipart/form-data">
+      <textarea name="message" placeholder="Type your message here..."></textarea>
+      <br>
+      <label for="image">Or choose an image to send:</label>
+      <input type="file" name="image" id="image" accept="image/*">
+      <br>
+      <input type="submit" value="Send">
+    </form>
+    <a href="{{ url_for('contacts') }}">Back to Contacts</a> |
+    <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+  </div>
+</body>
+</html>

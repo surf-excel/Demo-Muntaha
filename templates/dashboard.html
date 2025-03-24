@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Muntaha Alert Dashboard</title>
+    <style>
+        body, html { font-family: Arial, sans-serif; background: #f0f8ff; margin: 0; padding: 0; }
+        .container { max-width: 600px; margin: 2em auto; background: #fff; padding: 2em; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1 { color: #333; text-align: center; }
+        ul { list-style: none; padding: 0; }
+        li { margin: 1em 0; }
+        a { text-decoration: none; color: #007ACC; font-weight: bold; padding: 0.5em 1em; border: 2px solid #007ACC; border-radius: 5px; transition: background 0.3s ease; }
+        a:hover { background: #007ACC; color: #fff; }
+    </style>
+</head>
+<body>
+    <div class="container">
+       <h1>Muntaha Alert Dashboard</h1>
+       <ul>
+          <li><a href="{{ url_for('submit_report') }}">Submit Missing Report</a></li>
+          <li><a href="{{ url_for('reports') }}">View Missing Reports</a></li>
+          <li><a href="{{ url_for('contacts') }}">Private Messaging</a></li>
+          <li><a href="{{ url_for('logout') }}">Logout</a></li>
+       </ul>
+    </div>
+</body>
+</html>

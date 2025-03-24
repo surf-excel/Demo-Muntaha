@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Muntaha Alert - Submit Missing Report</title>
+  <style>
+    body { background: #f0f8ff; font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; }
+    .form-container { background: #fff; padding: 2em; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); width: 90%; max-width: 500px; }
+    h1 { text-align: center; color: #333; }
+    label { display: block; margin-top: 1em; font-weight: bold; }
+    input[type="text"], input[type="file"], textarea { width: 100%; padding: 0.5em; margin-top: 0.5em; border: 2px solid #ddd; border-radius: 5px; }
+    textarea { resize: vertical; }
+    input[type="submit"] { margin-top: 1.5em; width: 100%; padding: 0.75em; background: #007ACC; border: none; color: #fff; border-radius: 5px; cursor: pointer; }
+    .error { margin-top: 1em; background: #ffe6e6; color: #a33; padding: 0.5em; border-radius: 5px; }
+    a { display: block; text-align: center; margin-top: 1em; text-decoration: none; color: #007ACC; }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h1>Submit Missing Report</h1>
+    {% if error_msg %}
+    <div class="error">
+      <p>{{ error_msg }}</p>
+    </div>
+    {% endif %}
+    <!-- Add enctype for file upload -->
+    <form method="POST" enctype="multipart/form-data">
+      <!-- No reporter field now; the username is taken from session -->
+      <label for="missing_name">Missing Person's Name:</label>
+      <input type="text" id="missing_name" name="missing_name" required>
+      
+      <label for="contact">Contact Number:</label>
+      <input type="text" id="contact" name="contact" required>
+      
+      <label for="photo">Photo:</label>
+      <input type="file" id="photo" name="photo" accept="image/*" required>
+      
+      <label for="last_known">Last Known Location (Address):</label>
+      <input type="text" id="last_known" name="last_known" placeholder="Enter address" required>
+      
+      <label for="description">Report Description:</label>
+      <textarea id="description" name="description" rows="4" required></textarea>
+      
+      <input type="submit" value="Submit Report">
+    </form>
+    <a href="{{ url_for('dashboard') }}">Back to Home</a>
+  </div>
+</body>
+</html>
