@@ -4,7 +4,8 @@
   <meta charset="UTF-8">
   <title>Report Submitted</title>
   <!-- If you still want any styling, link to a CSS file or add inline CSS here -->
-  <!-- <link rel="stylesheet" href="{{ url_for('static', filename='submitted.css') }}"> -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename=common_style) }}">
   <style>
     body {
       margin: 0;
@@ -63,7 +64,7 @@
     <p>Dear {{ reporter }},</p>
     <p>
       Thank you for submitting the missing person report for {{ missing_name }}.<br>
-      We have issued an alert within a 20km radius and notified the local police station.
+      We have issued an alert within a 20km radius and notified the nearby police station.
     </p>
     <h2>Nearby Police Stations:</h2>
     <ul class="stations">

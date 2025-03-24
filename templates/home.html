@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<!-- ...existing head elements... -->
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Home - Muntaha Alert</title>
+	<link rel="stylesheet" href="{{ home_style }}">
+</head>
+<body>
+	<header>
+		<h1>Welcome to Muntaha Alert</h1>
+		<nav>
+			<ul>
+				<li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+				<li><a href="{{ url_for('submit_report') }}">Submit Report</a></li>
+				<li><a href="{{ url_for('reports') }}">View Reports</a></li>
+				<li><a href="{{ url_for('global_chat') }}">Global Chat</a></li>
+				<li><a href="{{ url_for('amber_alert') }}">Amber Alerts</a></li>
+				<li><a href="{{ url_for('contacts') }}">Contacts</a></li>
+				<li><a href="{{ url_for('logout') }}">Logout</a></li>
+			</ul>
+		</nav>
+	</header>
+	<main>
+		<p>Select an action from the menu above.</p>
+	</main>
+</body>
+</html>

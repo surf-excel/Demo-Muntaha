@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Reports - Amber Alert</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename=common_style) }}">
+</head>
+<body>
+    <h1>Search Reports</h1>
+    <form method="GET" action="{{ url_for('search_reports') }}">
+        <input type="text" name="q" placeholder="Enter keyword..." value="{{ query }}" required>
+        <button type="submit">Search</button>
+    </form>
+    <hr>
+    {% if results %}
+        <ul>
+        {% for report in results %}
+            <li>
+                <strong>{{ report.missing_name }}</strong><br>
+                Address: {{ report.address }}<br>
+                Age: {{ report.age }}<br>
+                Last Seen: {{ report.last_seen_date }}<br>
+                Contact Email: {{ report.contact_email }}<br>
+                Contact Name: {{ report.contact_name }}<br>
+                Description: {{ report.description }}<br>
+                <img src="{{ report.photo }}" alt="Photo" style="max-width:200px;"><br>
+            </li>
+            <hr>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No reports found matching your search.</p>
+    {% endif %}
+    <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+</body>
+</html>

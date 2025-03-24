@@ -1,0 +1,289 @@
+/* Google inspired dashboard design */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
+
+/* Reset and base styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Dashboard CSS - Orange theme */
+body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to bottom right, #FFA500, #FF8C00);
+    color: #333;
+    font-family: 'Roboto', sans-serif;
+    min-height: 100vh;
+}
+
+/* Basic header and footer styling */
+header, footer {
+    background: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    text-align: center;
+    color: #fff;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.header {
+    background-color: #FF8C00;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.card {
+    background-color: #FFEBCD;
+    margin: 20px 0;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: #333;
+}
+
+input, textarea, select {
+    width: 100%;
+    padding: 12px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    background-color: #FFEBCD;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: #FF8C00;
+    box-shadow: 0 0 0 2px rgba(255, 140, 0, 0.2);
+}
+
+button {
+    background-color: #FF8C00;
+    color: #fff;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #FF6600;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+    
+    .card {
+        padding: 15px;
+    }
+    
+    input, textarea, select, button {
+        padding: 10px;
+    }
+}
+
+/* Alerts and notifications */
+.alert {
+    padding: 12px 16px;
+    margin: 15px 0;
+    border-radius: 4px;
+    font-weight: 500;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* Main navigation */
+.main-nav {
+    display: flex;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 10px 20px;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.nav-item {
+    color: white;
+    text-decoration: none;
+    padding: 8px 15px;
+    margin: 0 5px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.nav-item:hover {
+    background-color: rgba(255, 140, 0, 0.7);
+}
+
+.nav-logout {
+    margin-left: auto;
+}
+
+.user-info {
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+/* Flash messages */
+.flash-messages {
+    margin: 15px 0;
+}
+
+/* Map container */
+.map-container {
+    height: 400px;
+    margin: 20px 0;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Report card styling */
+.report-card {
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.report-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background-color: #FF8C00;
+    color: white;
+}
+
+.report-body {
+    display: flex;
+    flex-direction: row;
+}
+
+.report-image {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+}
+
+.report-details {
+    padding: 15px;
+    flex: 1;
+}
+
+.report-actions {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px;
+    background-color: rgba(255, 235, 205, 0.3);
+}
+
+.action-button {
+    margin-left: 10px;
+}
+
+/* Chat styling */
+.chat-container {
+    height: 400px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    background-color: #f9f3e8;
+    margin-bottom: 15px;
+}
+
+.chat-message {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 8px;
+    max-width: 80%;
+}
+
+.chat-message.sent {
+    background-color: #FF8C00;
+    color: white;
+    margin-left: auto;
+}
+
+.chat-message.received {
+    background-color: #FFEBCD;
+    color: #333;
+}
+
+.sender-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.message-time {
+    font-size: 12px;
+    color: #777;
+    text-align: right;
+}
+
+/* Enhanced responsiveness for mobile */
+@media (max-width: 768px) {
+    .main-nav {
+        flex-direction: column;
+        padding: 5px;
+    }
+    
+    .nav-item {
+        margin: 5px 0;
+        text-align: center;
+    }
+    
+    .nav-logout {
+        margin-left: 0;
+    }
+    
+    .report-body {
+        flex-direction: column;
+    }
+    
+    .report-image {
+        width: 100%;
+        height: auto;
+    }
+}

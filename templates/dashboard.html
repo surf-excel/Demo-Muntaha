@@ -1,27 +1,172 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Muntaha Alert Dashboard</title>
-    <style>
-        body, html { font-family: Arial, sans-serif; background: #f0f8ff; margin: 0; padding: 0; }
-        .container { max-width: 600px; margin: 2em auto; background: #fff; padding: 2em; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        h1 { color: #333; text-align: center; }
-        ul { list-style: none; padding: 0; }
-        li { margin: 1em 0; }
-        a { text-decoration: none; color: #007ACC; font-weight: bold; padding: 0.5em 1em; border: 2px solid #007ACC; border-radius: 5px; transition: background 0.3s ease; }
-        a:hover { background: #007ACC; color: #fff; }
-    </style>
-</head>
-<body>
-    <div class="container">
-       <h1>Muntaha Alert Dashboard</h1>
-       <ul>
-          <li><a href="{{ url_for('submit_report') }}">Submit Missing Report</a></li>
-          <li><a href="{{ url_for('reports') }}">View Missing Reports</a></li>
-          <li><a href="{{ url_for('contacts') }}">Private Messaging</a></li>
-          <li><a href="{{ url_for('logout') }}">Logout</a></li>
-       </ul>
+{% extends base_template %}
+
+{% block title %}Dashboard - Muntaha Alert{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+<style>
+    .dashboard-stats {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+    }
+    .stat-card {
+        flex: 1;
+        min-width: 200px;
+        margin: 10px;
+        padding: 20px;
+        background-color: #FFEBCD;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        text-align: center;
+    }
+    .stat-number {
+        font-size: 36px;
+        font-weight: bold;
+        color: #FF8C00;
+    }
+    .stat-label {
+        margin-top: 10px;
+        color: #333;
+    }
+    #map {
+        height: 400px;
+        border-radius: 8px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<h2>Welcome to Muntaha Alert System</h2>
+
+{% if error_msg %}
+<div class="alert alert-danger">{{ error_msg }}</div>
+{% endif %}
+
+<div class="dashboard-stats">
+    <div class="stat-card">
+        <div class="stat-number">{{ stats.total_reports|default('0') }}</div>
+        <div class="stat-label">Active Missing Persons</div>
     </div>
-</body>
-</html>
+    <div class="stat-card">
+        <div class="stat-number">{{ stats.resolved_reports|default('0') }}</div>
+        <div class="stat-label">Found Persons</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-number">{{ stats.police_stations|default('0') }}</div>
+        <div class="stat-label">Nearby Police Stations</div>
+    </div>
+</div>
+
+<div class="card">
+    <h3>Find Direction to Safety</h3>
+    <p>Enter your current location and destination to get directions and find nearby police stations.</p>
+    
+    <form method="POST" action="{{ url_for('dashboard') }}">
+        <div class="form-group">
+            <label for="origin">Current Location:</label>
+            <input type="text" id="origin" name="origin" placeholder="Enter your current location" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="destination">Destination:</label>
+            <input type="text" id="destination" name="destination" placeholder="Enter your destination" required>
+        </div>
+        
+        <button type="submit">Get Directions</button>
+    </form>
+</div>
+
+{% if result %}
+<div class="card">
+    <h3>Route Information</h3>
+    <p><strong>Distance:</strong> {{ result.route_distance }}</p>
+    
+    <div id="map" class="map-container"></div>
+    
+    {% if result.stations %}
+    <h4>Nearby Police Stations:</h4>
+    <ul>
+        {% for station, distance in result.stations %}
+        <li>{{ station }} - {{ "%.2f"|format(distance) }} km away</li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>No nearby police stations found.</p>
+    {% endif %}
+</div>
+{% endif %}
+
+<div class="card">
+    <h3>Recent Amber Alerts</h3>
+    <div id="recent-alerts">
+        {% if recent_reports %}
+            {% for report in recent_reports %}
+            <div class="report-card">
+                <div class="report-header">
+                    <h4>{{ report.missing_name }}</h4>
+                    <span>Age: {{ report.age }}</span>
+                </div>
+                <div class="report-body">
+                    <img src="{{ report.photo }}" alt="{{ report.missing_name }}" class="report-image">
+                    <div class="report-details">
+                        <p><strong>Last Seen:</strong> {{ report.last_seen_date }}</p>
+                        <p><strong>Location:</strong> {{ report.address }}</p>
+                        <p>{{ report.description|truncate(100) }}</p>
+                    </div>
+                </div>
+                <div class="report-actions">
+                    <a href="{{ url_for('reports') }}" class="button">View Details</a>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p>No recent alerts found.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<script>
+    {% if result %}
+    // Initialize the map
+    var map = L.map('map').setView([{{ result.origin.lat }}, {{ result.origin.lng }}], 13);
+    
+    // Add OpenStreetMap tile layer
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+    
+    // Add markers for origin and destination
+    var originMarker = L.marker([{{ result.origin.lat }}, {{ result.origin.lng }}])
+        .addTo(map)
+        .bindPopup('Origin')
+        .openPopup();
+    
+    var destMarker = L.marker([{{ result.destination.lat }}, {{ result.destination.lng }}])
+        .addTo(map)
+        .bindPopup('Destination');
+    
+    // Create a line between origin and destination
+    var polyline = L.polyline([
+        [{{ result.origin.lat }}, {{ result.origin.lng }}],
+        [{{ result.destination.lat }}, {{ result.destination.lng }}]
+    ], {color: 'blue'}).addTo(map);
+    
+    // Add markers for police stations
+    {% if result.stations %}
+        {% for station, distance in result.stations %}
+            // We'd need the lat/lng for each station here
+            // This is a placeholder assuming we had that data
+            // L.marker([stationLat, stationLng]).addTo(map).bindPopup('{{ station }}');
+        {% endfor %}
+    {% endif %}
+    
+    // Fit the map to show all markers
+    map.fitBounds(polyline.getBounds().pad(0.1));
+    {% endif %}
+</script>
+{% endblock %}

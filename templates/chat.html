@@ -1,37 +1,94 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="refresh" content="10">
-  <title>Global Chat</title>
-  <style>
-    body { background: #f0f8ff; font-family: Arial, sans-serif; padding: 2em; }
-    .container { max-width: 600px; margin: auto; background: #fff; padding: 1em; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-    .message { margin-bottom: 1em; border-bottom: 1px solid #ddd; padding-bottom: 0.5em; }
-    .sender { font-weight: bold; }
-    form textarea { width: 100%; height: 60px; margin-top: 1em; padding: 0.5em; border: 1px solid #ccc; border-radius: 5px; }
-    form input[type="submit"] { margin-top: 0.5em; padding: 0.5em 1em; background: #007ACC; color: #fff; border: none; border-radius: 5px; cursor: pointer; }
-    .error { color: #a33; background: #ffe6e6; padding: 0.5em; border-radius: 5px; margin-bottom: 1em; }
-    a { text-decoration: none; color: #007ACC; }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h1>Global Chat</h1>
-    {% if error_msg %}
-      <div class="error">{{ error_msg }}</div>
-    {% endif %}
-    {% for msg in messages %}
-      <div class="message">
-        <span class="sender">{{ msg.sender }}:</span>
-        <span class="text">{{ msg.message }}</span>
-      </div>
-    {% endfor %}
-    <form method="POST">
-      <textarea name="message" placeholder="Enter your message..." required></textarea>
-      <input type="submit" value="Send">
+{% extends base_template %}
+
+{% block title %}Global Chat - Muntaha Alert{% endblock %}
+
+{% block extra_css %}
+<style>
+    .chat-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+    
+    .message-container {
+        height: 500px;
+        overflow-y: auto;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 15px;
+        background-color: #f9f3e8;
+        margin-bottom: 20px;
+    }
+    
+    .message-form {
+        display: flex;
+    }
+    
+    .message-input {
+        flex: 1;
+        margin-right: 10px;
+    }
+    
+    .timestamp {
+        font-size: 12px;
+        color: #777;
+        margin-top: 5px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="chat-header">
+    <h2>Global Chat</h2>
+    <p>Connected as: <strong>{{ session.username }}</strong></p>
+</div>
+
+{% if error_msg %}
+<div class="alert alert-danger">{{ error_msg }}</div>
+{% endif %}
+
+<div class="card">
+    <div class="message-container" id="messages">
+        {% if messages %}
+            {% for message in messages %}
+            <div class="chat-message {% if message.sender == session.username %}sent{% else %}received{% endif %}">
+                <div class="sender-name">{{ message.sender }}</div>
+                <div class="message-content">{{ message.message }}</div>
+                <div class="timestamp">{{ message.timestamp|default('Just now') }}</div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p class="empty-chat">No messages yet. Start the conversation!</p>
+        {% endif %}
+    </div>
+    
+    <form method="POST" action="{{ url_for('global_chat') }}" class="message-form">
+        <input type="text" name="message" placeholder="Type your message..." required class="message-input">
+        <button type="submit">Send</button>
     </form>
-    <p><a href="{{ url_for('dashboard') }}">Back to Dashboard</a></p>
-  </div>
-</body>
-</html>
+</div>
+
+<div class="card">
+    <h3>Chat Guidelines</h3>
+    <ul>
+        <li>Be respectful to all users.</li>
+        <li>Do not share sensitive personal information.</li>
+        <li>Use appropriate language.</li>
+        <li>Report any suspicious activity to administrators.</li>
+    </ul>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Scroll to bottom of chat
+    var messagesContainer = document.getElementById('messages');
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    
+    // Auto-refresh the chat (every 30 seconds)
+    setTimeout(function() {
+        location.reload();
+    }, 30000);
+</script>
+{% endblock %}

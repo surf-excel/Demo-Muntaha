@@ -1,0 +1,15 @@
+.navbar {
+    width: 100%;
+    padding: 15px 20px; /* Adjust padding for better spacing */
+    box-sizing: border-box; /* Ensures padding doesn’t affect width */
+}
+
+.navbar-container {
+    width: 100%;
+    max-width: none; /* Ensures it extends fully */
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}

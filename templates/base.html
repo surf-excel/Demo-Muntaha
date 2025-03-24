@@ -1,33 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>{% block title %}PraRoz{% endblock %}</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Muntaha Alert System{% endblock %}</title>
+    <link rel="stylesheet" href="{{ common_style }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    {% block extra_css %}{% endblock %}
 </head>
 <body>
-  <div class="main">
-    <div class="navbar">
-      <div class="icon">
-        <h2 class="logo">PraRoz</h2>
-      </div>
-      <div class="menu">
-        <ul>
-          <li><a href="{{ url_for('dashboard') }}">DASHBOARD</a></li>
-          <li><a href="{{ url_for('reports') }}">REPORTS</a></li>
-          <li><a href="{{ url_for('contacts') }}">CONTACTS</a></li>
-          <li><a href="{{ url_for('logout') }}">LOGOUT</a></li>
-        </ul>
-      </div>
-      <div class="search">
-        <input class="srch" type="search" placeholder="Search...">
-        <button class="btn">Search</button>
-      </div>
+    <header>
+        <div class="header">
+            <h1>Muntaha Alert System</h1>
+            {% if session.logged_in %}
+            <div class="user-info">Welcome, {{ session.username }}</div>
+            {% endif %}
+        </div>
+        {% if session.logged_in %}
+        <nav class="main-nav">
+            <a href="{{ url_for('dashboard') }}" class="nav-item"><i class="fas fa-home"></i> Dashboard</a>
+            <a href="{{ url_for('submit_report') }}" class="nav-item"><i class="fas fa-file-alt"></i> Submit Report</a>
+            <a href="{{ url_for('reports') }}" class="nav-item"><i class="fas fa-search"></i> View Reports</a>
+            <a href="{{ url_for('global_chat') }}" class="nav-item"><i class="fas fa-comments"></i> Global Chat</a>
+            <a href="{{ url_for('contacts') }}" class="nav-item"><i class="fas fa-address-book"></i> Contacts</a>
+            <a href="{{ url_for('logout') }}" class="nav-item nav-logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </nav>
+        {% endif %}
+    </header>
+
+    <div class="container">
+        {% if get_flashed_messages() %}
+        <div class="flash-messages">
+            {% for message in get_flashed_messages() %}
+            <div class="alert {% if 'error' in message %}alert-danger{% else %}alert-success{% endif %}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% block content %}{% endblock %}
     </div>
-    <div class="content">
-      {% block content %}{% endblock %}
-    </div>
-  </div>
-  <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
+
+    <footer>
+        <p>&copy; 2025 Muntaha Alert System. All rights reserved.</p>
+    </footer>
+
+    {% block scripts %}{% endblock %}
 </body>
 </html>

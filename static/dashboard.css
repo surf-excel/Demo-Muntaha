@@ -1,0 +1,160 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+/* NAVIGATION */
+.navbar {
+    background-color: #333;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    margin-bottom: 1rem; /* added margin for smoother transition */
+}
+
+.nav-container {
+    max-width: none; /* ensures full width */
+    margin: 0;
+    display: flex;
+    align-items: center;
+    padding: 1rem 2rem;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.nav-container .brand {
+    color: #ff6347;
+    font-size: 1.8rem;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.nav-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.nav-links li {
+    margin-left: 1.5rem;
+}
+
+.nav-links li a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+}
+
+.nav-links li a:hover {
+    color: #ff6347;
+}
+
+/* DASHBOARD CONTENT */
+.dashboard-container {
+    max-width: 1200px;
+    margin: 7rem auto 2rem auto; /* increased top margin */
+    padding: 2rem;
+}
+
+.dashboard-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.dashboard-header h1 {
+    font-size: 3rem;
+    margin: 0.5rem 0;
+    color: #fff;
+}
+
+/* SEARCH FORM */
+.dashboard-search {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+.dashboard-search form {
+    display: flex;
+    border-radius: 50px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+.dashboard-search input[type="text"] {
+    padding: 0.75rem 1rem;
+    border: none;
+    width: 300px;
+    outline: none;
+}
+.dashboard-search button {
+    background-color: #ff6347;
+    color: #fff;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.dashboard-search button:hover {
+    background-color: #e5533d;
+}
+
+/* REPORT CARDS */
+.reports-section h2 {
+    color: #fff;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+.report-card {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    margin: 1rem auto;
+    overflow: hidden;
+    display: flex;
+    flex-wrap: wrap;
+}
+.report-card img {
+    width: 100%;
+    max-width: 400px;
+    object-fit: cover;
+}
+.report-details {
+    padding: 1rem;
+    flex: 1;
+}
+.report-details h3 {
+    font-size: 1.5rem;
+    color: #ff6347;
+    margin-bottom: 0.5rem;
+}
+.report-details p {
+    margin: 0.5rem 0;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    margin: auto;
+}
+
+@media (min-width: 992px) {
+    .dashboard-container {
+        padding: 3rem;
+    }
+}

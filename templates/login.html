@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename=common_style) }}">
     <style>
         body { background: #f0f8ff; font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; }
         .form-container { background: #fff; padding: 2em; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
@@ -16,6 +18,9 @@
     </style>
 </head>
 <body>
+    <header>
+        <!-- Removed home icon -->
+    </header>
     <div class="form-container">
         <h1>Login</h1>
         {% if error_msg %}

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found - Muntaha Alert</title>
+    <link rel="stylesheet" href="{{ common_style }}">
+    <style>
+        .error-container {
+            text-align: center;
+            padding: 50px 20px;
+        }
+        .error-code {
+            font-size: 120px;
+            color: #FF8C00;
+            margin-bottom: 20px;
+        }
+        .error-message {
+            font-size: 24px;
+            margin-bottom: 30px;
+        }
+        .home-button {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #FF8C00;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card error-container">
+            <div class="error-code">404</div>
+            <div class="error-message">Oops! The page you're looking for doesn't exist.</div>
+            <a href="{{ url_for('dashboard') }}" class="home-button">Go Back Home</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,3 +1,5 @@
 brave|Bup|23.8398616|90.3576386|Alu|16513|/static/uploads/beco-batman-2-1741192876782.png|adsa
 1283c196-2460-4aa5-8995-783eab407623|mihir|MIST|23.8377201|90.3578917|Alu|65561|/static/uploads/Beco-OSINT-1741020774699.png|aa
 c93ddb4a-87f3-4501-a1cb-9f18c8a715f9|mihir|BUP,Mirpur Canotment,Dhaka|23.8398616|90.3576386|Pookie Telapia|0123456789|/static/uploads/bojack-horseman-sad.gif|Haraye felsi bhai
+9cd54f6d-4971-42a6-8440-0b39ce339b8c|mihir|Delhi|28.6139298|77.2088282|Kata Chara Ilish|0123456789|/static/uploads/Beco-OSINT-1741020774699.png|aa|18|18-05-2025|mihir@s.com|ada
+36856925-e294-437b-b31a-a24d31adf9bf|mihir|Dhap,Rangpur|25.7658678|89.2336462|Alu|0123456789|/static/uploads/beco-batman-2-1741192876782.png|aa|18|18-05-2025|mihir@s.com|surf_excel

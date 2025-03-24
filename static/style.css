@@ -4,6 +4,13 @@
     box-sizing: border-box;
 }
 
+/* Example color scheme */
+body {
+    background-color: #f0f0f0;
+    color: #333;
+    /* ...other style rules... */
+}
+
 .main {
     width: 100%;
     background: linear-gradient(to top, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.5) 50%), url("C:\Users\USER\Downloads");
@@ -19,6 +26,9 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    background-color: #333;
+    color: #fff;
+    /* ...other style rules... */
 }
 
 .icon .logo {

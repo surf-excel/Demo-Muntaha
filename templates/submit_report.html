@@ -1,49 +1,170 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>Muntaha Alert - Submit Missing Report</title>
-  <style>
-    body { background: #f0f8ff; font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; }
-    .form-container { background: #fff; padding: 2em; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); width: 90%; max-width: 500px; }
-    h1 { text-align: center; color: #333; }
-    label { display: block; margin-top: 1em; font-weight: bold; }
-    input[type="text"], input[type="file"], textarea { width: 100%; padding: 0.5em; margin-top: 0.5em; border: 2px solid #ddd; border-radius: 5px; }
-    textarea { resize: vertical; }
-    input[type="submit"] { margin-top: 1.5em; width: 100%; padding: 0.75em; background: #007ACC; border: none; color: #fff; border-radius: 5px; cursor: pointer; }
-    .error { margin-top: 1em; background: #ffe6e6; color: #a33; padding: 0.5em; border-radius: 5px; }
-    a { display: block; text-align: center; margin-top: 1em; text-decoration: none; color: #007ACC; }
-  </style>
-</head>
-<body>
-  <div class="form-container">
-    <h1>Submit Missing Report</h1>
-    {% if error_msg %}
-    <div class="error">
-      <p>{{ error_msg }}</p>
-    </div>
-    {% endif %}
-    <!-- Add enctype for file upload -->
-    <form method="POST" enctype="multipart/form-data">
-      <!-- No reporter field now; the username is taken from session -->
-      <label for="missing_name">Missing Person's Name:</label>
-      <input type="text" id="missing_name" name="missing_name" required>
-      
-      <label for="contact">Contact Number:</label>
-      <input type="text" id="contact" name="contact" required>
-      
-      <label for="photo">Photo:</label>
-      <input type="file" id="photo" name="photo" accept="image/*" required>
-      
-      <label for="last_known">Last Known Location (Address):</label>
-      <input type="text" id="last_known" name="last_known" placeholder="Enter address" required>
-      
-      <label for="description">Report Description:</label>
-      <textarea id="description" name="description" rows="4" required></textarea>
-      
-      <input type="submit" value="Submit Report">
+{% extends base_template %}
+
+{% block title %}Submit Missing Person Report - Muntaha Alert{% endblock %}
+
+{% block extra_css %}
+<style>
+    .form-container {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    
+    .form-section {
+        margin-bottom: 30px;
+    }
+    
+    .form-section-title {
+        border-bottom: 2px solid #FF8C00;
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+    }
+    
+    .two-columns {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+    
+    @media (max-width: 768px) {
+        .two-columns {
+            grid-template-columns: 1fr;
+        }
+    }
+    
+    .preview-container {
+        width: 200px;
+        height: 200px;
+        border: 2px dashed #ccc;
+        margin-top: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+    
+    #image-preview {
+        max-width: 100%;
+        max-height: 100%;
+        display: none;
+    }
+    
+    .required-field::after {
+        content: " *";
+        color: red;
+    }
+    
+    .help-text {
+        font-size: 12px;
+        color: #666;
+        margin-top: 5px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<h2>Submit Missing Person Report</h2>
+
+{% if error_msg %}
+<div class="alert alert-danger">{{ error_msg }}</div>
+{% endif %}
+
+<div class="card form-container">
+    <form method="POST" action="{{ url_for('submit_report') }}" enctype="multipart/form-data">
+        <div class="form-section">
+            <h3 class="form-section-title">Missing Person Information</h3>
+            
+            <div class="form-group">
+                <label for="missing_name" class="required-field">Full Name</label>
+                <input type="text" id="missing_name" name="missing_name" required>
+            </div>
+            
+            <div class="two-columns">
+                <div class="form-group">
+                    <label for="age" class="required-field">Age</label>
+                    <input type="number" id="age" name="age" min="0" max="120" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="last_seen_date" class="required-field">Last Seen Date</label>
+                    <input type="date" id="last_seen_date" name="last_seen_date" required>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="last_known" class="required-field">Last Known Location</label>
+                <input type="text" id="last_known" name="last_known" required>
+                <p class="help-text">Please provide as specific an address as possible</p>
+            </div>
+            
+            <div class="form-group">
+                <label for="description" class="required-field">Description</label>
+                <textarea id="description" name="description" rows="4" required></textarea>
+                <p class="help-text">Include physical appearance, clothing worn, and any other identifying details</p>
+            </div>
+            
+            <div class="form-group">
+                <label for="photo" class="required-field">Photo</label>
+                <input type="file" id="photo" name="photo" accept="image/*" required onchange="previewImage(this)">
+                <div class="preview-container">
+                    <img id="image-preview" src="#" alt="Preview">
+                    <span id="preview-text">Image preview will appear here</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-section">
+            <h3 class="form-section-title">Contact Information</h3>
+            
+            <div class="form-group">
+                <label for="contact_name" class="required-field">Contact Person Name</label>
+                <input type="text" id="contact_name" name="contact_name" required>
+            </div>
+            
+            <div class="two-columns">
+                <div class="form-group">
+                    <label for="contact" class="required-field">Contact Phone</label>
+                    <input type="tel" id="contact" name="contact" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="contact_email" class="required-field">Contact Email</label>
+                    <input type="email" id="contact_email" name="contact_email" required>
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-section">
+            <p><small>By submitting this form, you confirm that all information provided is accurate to the best of your knowledge.</small></p>
+            <button type="submit">Submit Report</button>
+        </div>
     </form>
-    <a href="{{ url_for('dashboard') }}">Back to Home</a>
-  </div>
-</body>
-</html>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function previewImage(input) {
+        var preview = document.getElementById('image-preview');
+        var previewText = document.getElementById('preview-text');
+        
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+                previewText.style.display = 'none';
+            }
+            
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    
+    // Set default date to today
+    document.addEventListener('DOMContentLoaded', function() {
+        var today = new Date().toISOString().split('T')[0];
+        document.getElementById('last_seen_date').setAttribute('max', today);
+        document.getElementById('last_seen_date').value = today;
+    });
+</script>
+{% endblock %}
