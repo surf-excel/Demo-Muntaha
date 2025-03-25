@@ -11,7 +11,7 @@ bitstring==4.3.0
 blinker==1.9.0
 cachetools==5.5.1
 capstone==5.0.5
-certifi @ file:///home/conda/feedstock_root/build_artifacts/certifi_1739515848642/work/certifi
+certifi==2025.5.18
 cffi==1.17.1
 charset-normalizer==3.4.1
 claripy==9.2.102
